@@ -28,12 +28,16 @@
 
 		$(document).ready(function() {
 			log('Connecting...');
-			Server = new FancyWebSocket('ws://codebase.in:9300');
+			Server = new FancyWebSocket('ws://89.32.150.200:9300');
 
 			$('#message').keypress(function(e) {
 				if ( e.keyCode == 13 && this.value ) {
+
+
 					log( 'You: ' + this.value );
-					send( this.value );
+					var dict = {"type":"TextPacket","sender_id":4,"receiver_id":"","sender_ip":"","receiver_ip":"","message":this.value};
+					var serialized = JSON.stringify(dict);
+					send( serialized );
 
 					$(this).val('');
 				}
@@ -42,6 +46,9 @@
 			//Let the user know we're connected
 			Server.bind('open', function() {
 				log( "Connected." );
+				 // sendPresence();
+
+
 			});
 
 			//OH NOES! Disconnection occurred.
@@ -56,11 +63,19 @@
 
 			Server.connect();
 		});
+		// function sendPresence(){
+		// 	var dict = {"isOnline":true,"type":"PresencePacket","sender_id":4,"receiver_id":"","sender_ip":"","receiver_ip":""};
+		// 	var serialized = JSON.stringify(dict);
+		// 	send(serialized);
+		// }
+
+
 	</script>
 </head>
 
 <body>
 	<div id='body'>
+	
 		<textarea id='log' name='log' readonly='readonly'></textarea><br/>
 		<input type='text' id='message' name='message' />
 	</div>
