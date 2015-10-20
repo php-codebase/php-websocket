@@ -14,8 +14,8 @@ class GhostPacket {
     public function __construct($sender_id,$sender_ip){
 
 
-        $this->sender_id = $sender_id;
-        $this->sender_ip = $sender_ip;
+        $this->sender_id = strval($sender_id);
+        $this->sender_ip = strval($sender_ip);
   
     }
     public function toJSON(){
